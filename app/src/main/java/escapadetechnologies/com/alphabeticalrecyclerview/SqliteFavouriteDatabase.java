@@ -26,11 +26,15 @@ public class SqliteFavouriteDatabase extends SQLiteOpenHelper {
     public static final String ID = "id";
 
     public static final String FAVOURITE = "favourites";
+    public static final String NODE_ID = "node_id";
+    public static final String PRIVATE = "private";
+    public static final String REPOS_URL = "repos_url";
+    public static final String TYPE = "type";
 
 
 
     public SqliteFavouriteDatabase(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 5);
     }
 
     @Override
@@ -38,10 +42,14 @@ public class SqliteFavouriteDatabase extends SQLiteOpenHelper {
 
         String CREATE_FAVOURITES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GITHUB + "("
                 + INCREMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ID + " TEXT,"
+                + ID + " TEXT UNIQUE,"
                 + NAME + " TEXT,"
                 + FULL_NAME + " TEXT,"
-                + FAVOURITE + " DEFAULT 0"
+                + FAVOURITE + " DEFAULT 0,"
+                + NODE_ID + " TEXT,"
+                + PRIVATE + " TEXT,"
+                + REPOS_URL + " TEXT,"
+                + TYPE + " TEXT"
                 + ")";
 
         db.execSQL(CREATE_FAVOURITES_TABLE);
@@ -50,7 +58,23 @@ public class SqliteFavouriteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GITHUB);
+        /*db.execSQL("DROP TABLE IF EXISTS " + TABLE_GITHUB);*/
+        switch (oldVersion){
+            case 1:
+                db.execSQL("ALTER TABLE " + TABLE_GITHUB + " ADD COLUMN " + NODE_ID + " TEXT ");
+
+            case 2:
+                db.execSQL("ALTER TABLE " + TABLE_GITHUB + " ADD COLUMN " + PRIVATE + " TEXT ");
+
+            case 3:
+                db.execSQL("ALTER TABLE GITHUB_DATA ADD COLUMN repos_url text");
+
+            case 4:
+                db.execSQL("ALTER TABLE GITHUB_DATA ADD COLUMN type text");
+
+                /*default:
+                    db.execSQL("DROP TABLE IF EXISTS " + TABLE_GITHUB);*/
+        }
     }
 
     public ArrayList getFavouritesData(){
@@ -67,6 +91,10 @@ public class SqliteFavouriteDatabase extends SQLiteOpenHelper {
                 hashMap.put(SqliteFavouriteDatabase.NAME,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.NAME)));
                 hashMap.put(SqliteFavouriteDatabase.FULL_NAME,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.FULL_NAME)));
                 hashMap.put(SqliteFavouriteDatabase.ID,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.ID)));
+                hashMap.put(SqliteFavouriteDatabase.NODE_ID,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.NODE_ID)));
+                hashMap.put(SqliteFavouriteDatabase.PRIVATE,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.PRIVATE)));
+                hashMap.put(SqliteFavouriteDatabase.REPOS_URL,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.REPOS_URL)));
+                hashMap.put(SqliteFavouriteDatabase.TYPE,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.TYPE)));
 
                 arrayList.add(hashMap);
 
@@ -91,6 +119,10 @@ public class SqliteFavouriteDatabase extends SQLiteOpenHelper {
                 hashMap.put(SqliteFavouriteDatabase.NAME,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.NAME)));
                 hashMap.put(SqliteFavouriteDatabase.FULL_NAME,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.FULL_NAME)));
                 hashMap.put(SqliteFavouriteDatabase.ID,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.ID)));
+                hashMap.put(SqliteFavouriteDatabase.NODE_ID,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.NODE_ID)));
+                hashMap.put(SqliteFavouriteDatabase.PRIVATE,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.PRIVATE)));
+                hashMap.put(SqliteFavouriteDatabase.REPOS_URL,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.REPOS_URL)));
+                hashMap.put(SqliteFavouriteDatabase.TYPE,cursor.getString(cursor.getColumnIndex(SqliteFavouriteDatabase.TYPE)));
 
                 arrayList.add(hashMap);
             }while (cursor.moveToNext());

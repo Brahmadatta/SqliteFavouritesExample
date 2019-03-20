@@ -90,10 +90,23 @@ public class MainActivity extends AppCompatActivity {
                             String name = jsonArray.getJSONObject(i).getString("name");
                             String fullname = jsonArray.getJSONObject(i).getString("full_name");
                             String id = jsonArray.getJSONObject(i).getString("id");
+                            String node_id = jsonArray.getJSONObject(i).getString("node_id");
+                            String priv = jsonArray.getJSONObject(i).getString("private");
+                            String owner = jsonArray.getJSONObject(i).getString("owner");
+
+                            JSONObject object = new JSONObject(owner);
+
+                            String repos_url = object.getString("repos_url");
+                            String type = object.getString("type");
+
 
                             hashMap.put("name", name);
                             hashMap.put("full_name", fullname);
                             hashMap.put("id", id);
+                            hashMap.put("node_id", node_id);
+                            hashMap.put("private", priv);
+                            hashMap.put("repos_url", repos_url);
+                            hashMap.put("type", type);
 
 
                             SQLiteDatabase db = sqliteFavouriteDatabase.getWritableDatabase();
@@ -103,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
                             contentValues.put(SqliteFavouriteDatabase.NAME, name);
                             contentValues.put(SqliteFavouriteDatabase.FULL_NAME, fullname);
                             contentValues.put(SqliteFavouriteDatabase.ID, id);
+                            contentValues.put(SqliteFavouriteDatabase.NODE_ID, node_id);
+                            contentValues.put(SqliteFavouriteDatabase.PRIVATE, priv);
+                            contentValues.put(SqliteFavouriteDatabase.REPOS_URL, repos_url);
+                            contentValues.put(SqliteFavouriteDatabase.TYPE, type);
 
                             db.insert(SqliteFavouriteDatabase.TABLE_GITHUB, null, contentValues);
 

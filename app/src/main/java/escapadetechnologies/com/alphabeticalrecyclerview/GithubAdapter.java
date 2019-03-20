@@ -43,6 +43,10 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
         githubViewHolder.name.setText(hashMap.get("name"));
         githubViewHolder.fullname.setText(hashMap.get("full_name"));
         githubViewHolder.id.setText(hashMap.get("id"));
+        githubViewHolder.node_id.setText(hashMap.get("node_id"));
+        githubViewHolder.priv.setText(hashMap.get("private"));
+        githubViewHolder.repos_url.setText(hashMap.get("repos_url"));
+        githubViewHolder.type.setText(hashMap.get("type"));
 
 
 
@@ -65,7 +69,7 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
 
     public class GithubViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,fullname,id;
+        TextView name,fullname,id,node_id,priv,repos_url,type;
         ImageView notFavourite,favourite;
 
         public GithubViewHolder(@NonNull View itemView) {
@@ -76,6 +80,10 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
             notFavourite = itemView.findViewById(R.id.notFavourite);
             favourite = itemView.findViewById(R.id.favourite);
             id = itemView.findViewById(R.id.id);
+            node_id = itemView.findViewById(R.id.node_id);
+            priv = itemView.findViewById(R.id.priv);
+            repos_url = itemView.findViewById(R.id.repos_url);
+            type = itemView.findViewById(R.id.type);
 
             sqliteFavouriteDatabase = new SqliteFavouriteDatabase(context);
 
