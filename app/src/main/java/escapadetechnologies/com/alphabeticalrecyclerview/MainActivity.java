@@ -1,7 +1,10 @@
 package escapadetechnologies.com.alphabeticalrecyclerview;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,17 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTheData() {
 
-        if (sqliteFavouriteDatabase.getFavouritesData().size() != 0){
-
-            ArrayList arrayList = sqliteFavouriteDatabase.getFavouritesData();
-
-            GithubAdapter githubAdapter = new GithubAdapter(arrayList, this);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(githubAdapter);
-            githubAdapter.notifyDataSetChanged();
-
-        }else {
+        if (checkInternetConnection(this)) {
 
             StringRequest stringRequest = new StringRequest(BASE_URL, new Response.Listener<String>() {
                 @Override
@@ -134,21 +127,30 @@ public class MainActivity extends AppCompatActivity {
 
             RequestQueue queue = Volley.newRequestQueue(this);
             queue.add(stringRequest);
-        }
-    }
+        }else if (sqliteFavouriteDatabase.getFavouritesData().size() != 0){
+            ArrayList arrayList = sqliteFavouriteDatabase.getFavouritesData();
 
-    private void showDataFromDatabase() {
-
-        ArrayList arrayList = sqliteFavouriteDatabase.getFavouritesData();
-        if (arrayList.size() == 0){
-            Toast.makeText(this, "Please enable Internet", Toast.LENGTH_SHORT).show();
-        }else {
             GithubAdapter githubAdapter = new GithubAdapter(arrayList, this);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(githubAdapter);
             githubAdapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(this, "Please enable the Internet connection", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void showDataFromDatabase() {
+
+        ArrayList arrayList = sqliteFavouriteDatabase.getFavouritesData();
+
+            GithubAdapter githubAdapter = new GithubAdapter(arrayList, this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(githubAdapter);
+            githubAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -159,5 +161,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(githubAdapter);
         githubAdapter.notifyDataSetChanged();
+    }
+
+    private static boolean checkInternetConnection(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }
