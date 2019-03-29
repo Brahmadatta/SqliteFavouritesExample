@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/misplaced_an_item_during_your_visit_please_contact_security_for_immediate_assistance_if_the_item_was_lost_at_a_particular_store_we_encourage_you_to_contact_the_store_directly_and_are_happy_to_assist_as_needed_if_you_are_reporting_an_item_that_was_lost_more_than_two_weeks_ago_please_email_to_the_id_given_below"/>
+
+
+</LinearLayout>
