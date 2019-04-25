@@ -1,4 +1,4 @@
-package escapadetechnologies.com.alphabeticalrecyclerview;
+package Example.com.alphabeticalrecyclerview;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package escapadetechnologies.com.alphabeticalrecyclerview;
+package Example.com.alphabeticalrecyclerview;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

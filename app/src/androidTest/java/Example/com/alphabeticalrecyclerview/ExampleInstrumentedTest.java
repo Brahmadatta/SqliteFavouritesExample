@@ -1,4 +1,4 @@
-package escapadetechnologies.com.alphabeticalrecyclerview;
+package Example.com.alphabeticalrecyclerview;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

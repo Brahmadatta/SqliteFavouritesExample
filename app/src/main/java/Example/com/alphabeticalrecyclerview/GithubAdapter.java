@@ -1,4 +1,4 @@
-package escapadetechnologies.com.alphabeticalrecyclerview;
+package Example.com.alphabeticalrecyclerview;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -86,6 +86,21 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
             type = itemView.findViewById(R.id.type);
 
             sqliteFavouriteDatabase = new SqliteFavouriteDatabase(context);
+
+
+            name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), ""+name.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            repos_url.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), ""+repos_url.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
             notFavourite.setOnClickListener(new View.OnClickListener() {
                 @Override
